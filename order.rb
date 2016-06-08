@@ -9,12 +9,23 @@ last_name = gets.chomp
 
 user = User.where(first_name: first_name, last_name: last_name).first_or_create!
 
-puts "Please choose an item from this list:"
+
 items = Item.pluck(:description)
 puts items
+puts
+puts "Please choose an item from this list"
 
-item_input = gets.chomp
-item_chosen = Item.find_by(description: item_input)
+item_chosen = nil
+item_input = nil
+
+loop do
+  item_input = gets.chomp
+  item_chosen = Item.find_by(description: item_input)
+  if item_chosen == nil
+    puts "Please choose a valid item from the list"
+  end
+  break if item_chosen != nil
+end
 
 
 binding.pry
